@@ -5,7 +5,10 @@
 #include<cmath>
 
 using namespace std ;
-
+/*Scrivere una funzione che prende in input un 
+array di interi e ritorna la distanza massima tra due interi memorizzati 
+nell’array (la distanza tra due interi `e la loro differenza in valore assoluto).
+*/
 int dif_abs(int n, int m){
 	if((n-m)<0) return (m-n) ;
 	else return (n-m) ;
