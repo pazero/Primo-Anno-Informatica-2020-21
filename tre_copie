@@ -1,0 +1,35 @@
+#include<iostream>
+#include<cstdlib>
+#include<ctime>
+#include<cstring>
+#include<cmath>
+
+using namespace std ;
+
+//Scrivere una funzione “tre copie” che prende un array di interi e ritorna “vero” se l’array contiene un elemento
+//con almeno tre copie di esso, “falso” altrimenti.
+bool tre_copie(int a[], int l) {
+	int tot=0 ;
+	int j=0 ;
+	for(int i=0; i<l; i++) {
+		j=i+1 ;
+		while (j<l) {
+			if(a[i]==a[j]) tot++ ;
+			j++ ;
+		}
+		if (tot>=2) return true ;
+		tot=0 ;
+	}
+	return false ;
+}
+int main() {
+	srand(time(0)) ;
+	int l=10 ;
+	int a[l] ;
+	for(int i=0; i<l; i++) {
+		a[i]=rand()%10 ;
+		cout<< a[i]<<"\t" ;
+	}
+	cout<< endl<< tre_copie(a, l) ;
+	return 0 ;
+}
