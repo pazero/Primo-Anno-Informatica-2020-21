@@ -5,7 +5,9 @@
 #include<cmath>
 
 using namespace std ;
-
+/*Scrivere una funzione che prende in input un array A di interi
+(l’array non e` ordinato) e ritorna il valore in A che ha piu` copie memorizzate in A.
+*/
 void scambia (int& n, int& m) {
 	int tmp;
 	tmp = n ;
