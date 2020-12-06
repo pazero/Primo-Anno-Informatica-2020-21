@@ -1,0 +1,23 @@
+#include<iostream>
+#include<cstdlib>
+#include<ctime>
+#include<cstring>
+#include<cmath>
+using namespace std ;
+
+//Scrivere una funzione che prende un array di interi e restituisce la norma,
+//cioe` la somma degli interi positivi meno la somma degli interi negativi (presi in valore assoluto)
+
+int abs(int n) {
+
+	if (n<0) return (-n) ;
+	else return n ;
+}
+int norma(int a[], int l) {
+	int sum=a[0] ;
+	for(int j=1; j<l; j++) {
+		if(a[j]<0) sum-=abs(a[j]) ;
+		else sum+=a[j] ;
+	}
+	return sum ;
+}
