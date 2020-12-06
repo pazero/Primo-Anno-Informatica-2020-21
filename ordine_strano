@@ -1,0 +1,34 @@
+#include<iostream>
+#include<cstdlib>
+#include<ctime>
+#include<cstring>
+#include<cmath>
+
+using namespace std ;
+
+void ordine_strano(int a[], int l) {
+	int dest[l] ;
+	int j=0 ;
+	int i=0 ;
+	for(i=0; i<l; i++){
+		if(a[i]>1000) {
+			dest[j]=a[i] ;
+			j++ ;
+		}
+	}
+	for(i=0; i<l; i++){
+		if(a[i]<0) {
+			dest[j]=a[i] ;
+			j++ ;
+		}
+	}
+	for(i=0; i<l; i++){
+		if(a[i]<=1000 && a[i]>=0) {
+			dest[j]=a[i] ;
+			j++ ;
+		}
+	}
+	for(i=0; i<l; i++) {
+		a[i]=dest[i] ;
+	}
+}
