@@ -1,0 +1,53 @@
+#include<iostream>
+#include<cstdlib>
+#include<ctime>
+#include<cstring>
+#include<cmath>
+
+using namespace std ;
+
+void scambia (int& n, int& m) {
+	int tmp;
+	tmp = n ;
+	n = m ;
+	m = tmp ;
+}
+void ordina_array_int (int a[], int l){
+	int i, j ;
+	for(i=0; i<l; i++) {
+		for(j =0; j<l-1-i; j++){
+			if (a[j]>a[j+1]) scambia(a[j],a[j+1]) ;
+		}
+	}
+}
+
+int presente_piu_volte(int a[], int l) {
+	ordina_array_int(a, l) ;
+	int max=0 ;
+	int j=0 ;
+	int num ;
+	for(int i=0; i<l; i++){
+		if (a[i]==a[i+1]) j++ ;
+		else if(a[i]!=a[i+1]){
+			j++ ;
+			if(j>max) {
+				max=j ;
+				j=0 ;
+				num = a[i] ;
+			}
+			else j=0 ;
+		}
+	}
+	return(num) ;
+}
+int main() {
+	int l = 15 ;
+	int a[l] ;
+	srand(time(0)) ;
+	for(int i=0; i<l; i++){
+		a[i]=rand()%10 ;
+		cout<< a[i]<< " ";
+	}
+	cout<< endl<< presente_piu_volte(a,l)<< endl ;
+	return 0 ;
+}
