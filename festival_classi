@@ -1,0 +1,60 @@
+#include<iostream>
+#include<cstdlib>
+#include<ctime>
+#include<cstring>
+#include<cmath>
+
+using namespace std ;
+class Ospiti_Festival {
+	protected :
+		struct list{
+			char nome[20] ;
+			double costo ;
+			int minuti ;
+			ospiti* next ;
+		 };
+		list *ospiti ;
+		int numero_ospiti ;
+	public :
+		Ospiti_Festival() {
+			numero_ospiti = 0 ;
+			ospiti = NULL ;
+		}
+		void nuovo_ospite(char nome[], double costo, int minuti) {
+			numero_ospiti++ ;
+			list *nuovo = new list ;
+			strcpy(nuovo->nome, nome) ;
+			nuovo->costo = costo ;
+			nuovo->minuti = minuti ;
+			nuovo->next = ospiti ;
+			ospiti = nuovo ;
+		}
+		void ospite_costoso(char costoso[]) {
+			list *iter ;
+			iter = ospiti ;
+			int max=0 ;
+			while(iter NULL) {
+				if(iter->costo > max){
+					strcpy(costoso, iter->nome) ;
+					max = iter->costo ;
+				}
+				iter = iter->next ;
+			}
+		}
+};
+
+class OspitiFestivalPlus: public OspitiFestival {
+	protected :
+		double costo_totale ;
+	public :
+		OspitiFestivalPlus():OspitiFestival(){
+			costo_totale = 0 ;
+		}
+		void aggiungi_ospite(char nome[], int costo, int minuti) {
+			OspitiFestival::aggiungi_ospite(nome, costo, minuti) ;
+			costo_totale += (costo) ;
+		}
+		double costo_medio(){
+			return costo_totale/numero_ospiti ;
+		}
+};
