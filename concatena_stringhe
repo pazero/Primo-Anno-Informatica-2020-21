@@ -1,0 +1,25 @@
+#include<iostream>
+#include<cstdlib>
+#include<ctime>
+#include<cstring>
+#include<cmath>
+
+using namespace std ;
+//concatena due stringhe nella prima
+void concatena_stringhe(char a[], char b[]) {
+	int length_a=strlen(a) ;
+	int length_b=strlen(b) ;
+	for(int i=0; b[i]!='\0'; i++) {
+		a[length_a+i]=b[i] ;
+	}
+	a[length_a+length_b]='\0' ;
+}
+int main() {
+	char a[20] = "Ciao " ;
+	char b[20] = "bellooo" ;
+	concatena_stringhe(a,b);
+	for(int i=0; a[i]!='\0'; i++){
+		cout<< a[i] ;
+	}
+	return 0 ;
+}
