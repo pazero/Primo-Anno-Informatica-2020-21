@@ -1,0 +1,60 @@
+#include<iostream>
+#include<cstdlib>
+#include<ctime>
+#include<cstring>
+#include<cmath>
+
+using namespace std ;
+
+bool ordine_alfabetico_nomi(char a[], char b[]){
+	bool esci=false ;
+	int i=0 ;
+	while(!esci){
+		//se le due lettere sono uguali passo all'indice successivo
+		if(a[i]==b[i] || a[i]-32==b[i] || a[i]==b[i]-32 || a[i]+32==b[i] || a[i]==b[i]+32) i++ ;
+		else {
+			//caso in cui a[i] sia maiuscolo
+			if(a[i]>64 && a[i]<91) {
+				//se anche b[i] è maiuscolo
+				if(b[i]>64 && b[i]<91) {
+					if(a[i]>b[i]) return 0 ;
+					else return 1 ;
+				}
+				//se b[i] è minuscolo
+				else {
+					if((a[i]+32)>b[i]) return 0 ;
+					else return 1 ;
+				}
+			}
+			//caso in cui a[i] sia minuscolo
+			else {
+				//se anche b[i] è minuscolo
+				if (b[i]>96 && b[i]<123) {
+					if(a[i]>b[i]) return 0 ;
+					else return 1 ;
+				}
+				//se b[i] è maiuscolo
+				else {
+					if((a[i]-32)>b[i]) return 0 ;
+					else return 1 ;
+				}
+			}
+			esci = true ;
+		}
+	}
+	return 0 ;
+}
+int main() {
+	char a[] = "aab" ;
+	char b[] = "aac" ;
+	int l1 = strlen(a) ;
+	int l2 = strlen(b) ;
+	int cosa = ordine_alfabetico_nomi(a,b) ;
+	if (cosa==0) {
+		for(int i=0; i<l1; i++) cout<< a[i] ;
+	}
+	else {
+		for(int i=0; i<l2; i++) cout<< b[i] ;
+	}
+	return 0 ;
+}
