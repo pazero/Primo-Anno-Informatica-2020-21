@@ -46,6 +46,16 @@ bool ordine_alfabetico_nomi(char a[], char b[]){
 	}
 	return 0 ;
 }
+
+void ordine_alfabetico (const char s1[], const char s2[], int len1, int len2, int i=0) {
+    char c1 = s1[i], c2 = s2[i];
+    if(c1 > 96) c1-=32;
+    if(c2 > 96) c2-=32;
+    if(c1 < c2 || len1 < i) cout << s1 << endl;
+    else if(c2 < c1 || len2 < i) cout << s2 << endl;
+    else ordine_alfabetico(s1, s2, len1, len2, i+1);
+}
+
 int main() {
 	char a[] = "aaita" ;
 	char b[] = "ba" ;
