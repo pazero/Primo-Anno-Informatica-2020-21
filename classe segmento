@@ -1,0 +1,54 @@
+#include<iostream>
+#include<cstdlib>
+#include<ctime>
+#include<cstring>
+
+using namespace std ;
+class segmento {
+	protected :
+		float x1,x2,y1,y2 ;
+	public :
+		segmento(float x1, float y1, float x2, float y2){
+			if(x1>0 && x2>0 && y1>0 && y2>0) {
+				this->x1 = x1 ;
+				this->x2 = x2 ;
+				this->y1 = y1 ;
+				this->y2 = y2 ;
+			}
+			else{
+				this->x1 = 0 ;
+				this->x2 = 0 ;
+				this->y1 = 0 ;
+				this->y2 = 0 ;
+				cout<< "Errore! Devi inserire coordinate positive" ;				
+			}
+		}
+		float lunghezza(){
+			return (sqrt(pow(x1-x2,2)+pow(y1-y2,2))) ;
+		}
+};
+class segmenti_adiacenti : public segmento {
+	protected :
+		float x3, y3 ;
+	public :
+		segmenti_adiacenti(float x1, float y1, float x2, float y2, float x3, float y3) : segmento(x1,y1,x2,y2) {
+			if(x1>0 && x2>0 && y1>0 && y2>0 && x3>0 && y3>0){
+				this->x3 = x3 ;
+				this->y3 = x3 ;
+			}
+			else {
+				this->x3 = 0 ;
+				this->y3 = 0 ;
+				cout<< "Errore! Devi inserire coordinate positive" ;
+			}
+		}
+		float lunghezza_primo(){
+			return segmento :: lunghezza() ;
+		}
+		float lunghezza_secondo() {
+			return (sqrt(pow(x3-x2,2)+pow(y3-y2,2))) ;
+		}
+		float lunghezza() {
+			return (lunghezza_primo() + lunghezza_secondo() );
+		}
+};
