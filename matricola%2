@@ -1,0 +1,21 @@
+struct lista_di_studenti {
+	char nome[20] ;
+	char cognome[20] ;
+	int matricola ;
+	lista_di_studenti *next ;
+};
+typedef lista_di_studenti *lista ;
+
+lista filtro(lista indice){
+	lista head = indice ;
+	while(head!=NULL) {
+		if(head->matricola%2==0 && head->matricola%4!=0) head=head->next ;
+		else {
+			lista tmp = head ;
+			head = head->next ;
+			delete(tmp) ;
+			tmp=NULL ;
+		}
+	}
+	return indice ;
+}
