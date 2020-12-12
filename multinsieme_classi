@@ -1,0 +1,97 @@
+class multinsieme {
+protected :
+	struct oggetto {
+		int val ;
+		int molt ;
+		oggetto *next ;
+	};
+
+	typedef oggetto *lista ;
+	lista borsa = new oggetto ;
+
+public :
+	multinsieme(int valore, int molteplicita) {
+		 borsa->val = valore ;
+		 borsa->molt = molteplicita ;
+		 borsa->next = NULL ;
+	}
+
+	lista add(int valore) {
+		lista aux = borsa ;
+		bool esci = false ;
+		while(!esci && aux!=NULL) {
+			if(aux->val == valore) {
+				aux->molt +=1 ;
+				esci = true ;
+			}
+			else {
+				if (aux->next != NULL) aux = aux->next ;
+				else {
+					aux->next = new oggetto ;
+					aux->next->val = valore ;
+					aux->next->molt = 1 ;
+					aux->next->next = NULL ;
+					esci = true ;
+				}
+			}
+		}
+    return borsa ;
+	}
+
+  lista remove(int valore) {
+		lista aux = borsa ;
+		bool esci = false ;
+		lista prec = NULL ;
+		while(aux!=NULL && !esci) {
+			if(aux->val!=valore) {
+				prec = aux ;
+				aux = aux->next ;
+			}
+			else {
+				if(aux->molt > 1) aux->molt -= 1 ;
+				else {
+					if(prec==NULL) borsa = aux->next ;
+					else prec->next = aux->next ;
+					lista aux2 = aux ;
+					aux = aux->next ;
+					delete(aux2) ;
+					aux2 = NULL ;
+				}
+				esci =true ;
+			}
+		}
+    return borsa ;
+	}
+
+  void print_borsa() {
+    lista aux = borsa ;
+    while(aux!=NULL) {
+      cout<< aux->val<< " " << aux->molt << endl ;
+      aux = aux->next ;
+    }
+  }
+};
+
+class multinsiemeplus2 : public multinsieme {
+	public :
+		multinsiemeplus2(int valore, int molteplicita): multinsieme(valore, molteplicita) {}
+
+		lista addplus2(int valore, int molteplicita){
+			multinsieme :: add(valore) ;
+			lista aux = borsa ;
+			bool esci = false ;
+			while(!esci) {
+				if(aux->val == valore) {
+					aux->molt += molteplicita-1 ;
+					esci = true ;
+				}
+				else {
+					aux=aux->next ;
+				}
+			}
+			return borsa ;
+		}
+    void print_borsa2() {
+      multinsieme :: print_borsa() ;
+    }
+} ;
