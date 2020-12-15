@@ -1,0 +1,29 @@
+struct nodo {
+  int val ;
+  nodo *next;
+} ;
+typedef nodo *lista ;
+
+class mlista {
+  protected :
+    lista interi = NULL;
+  public :
+    mlista(int n) {
+      lista nuovo ;
+      for(int i=0; i<n; i++){
+        nuovo = new nodo ;
+        nuovo->val = rand()%10 ;
+        nuovo->next = interi ;
+        interi = nuovo ;            
+      }
+    }
+    lista svela_this() {
+      return interi ;
+    }
+    void unione1(mlista x) {
+      lista aux = interi ;
+      lista aux2 = x.svela_this() ;
+      while(aux->next!=NULL) aux = aux->next ;
+      aux->next = aux2 ;
+    }
+ } ;
