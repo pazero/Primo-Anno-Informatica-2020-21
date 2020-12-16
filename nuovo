@@ -1,0 +1,264 @@
+/* Punti 10) Definire la classe mlista con un campo che è una lista di interi non ordinata e con possibili duplicazioni (Un intero puo' occorrere piu volte). La lista è una lista "semplice", cioè gli elementi hanno soltato il puntatore in avanti. 
+La classe contiene anche due metodi:
+
+Checkmu1 che prende in input un intero e ritorna true se l'intero occorre 2 o piu' volte, false altrimenti.
+
+union che prende in input un oggetto di classe mlista, sia esso x, e aggiorna la lista del this inserendo anche gli elementi della lista di x. 
+
+definire la seguente sotto-classe mlistasomma di mlista che ha un metodo somma che ritorna la somma degli interi distinti che si trovano nel this, cioè gli interi che sono presenti piu' volte vengono sommati una sola volta. La funzione somma non puo' altreare il this. */
+/* DOMANDE :
+-costruttore mlista
+-lista x (?prende in input un oggetto di classe mlista?)
+-senso della sottoclasse
+*/
+struct nodo {
+  int val ;
+  nodo *next;
+} ;
+typedef nodo *lista ;
+
+class mlista {
+  protected :
+    lista interi = NULL;
+  public :
+    mlista(int n) {
+      lista nuovo ;
+      for(int i=0; i<n; i++){
+        nuovo = new nodo ;
+        nuovo->val = rand()%10 ;
+        nuovo->next = interi ;
+        interi = nuovo ;            
+      }
+    }
+    bool checkmu(int n) {
+      int count=0 ;
+      lista aux=interi ;
+      while(aux!=NULL) {
+        if(aux->val == n) count++ ;
+        if(count == 2) return true ;
+        aux = aux->next ;
+       }
+      return false ;
+    }
+    void unione(lista x) {
+      lista aux = interi ;
+      lista aux2 = x ;
+      while(aux->next!=NULL) aux = aux->next ;
+      aux->next = aux2 ;
+    }
+    lista svela_this() {
+      return interi ;
+    }
+    void unione1(mlista x) {
+      lista aux = interi ;
+      lista aux2 = x.svela_this() ;
+      while(aux->next!=NULL) aux = aux->next ;
+      aux->next = aux2 ;
+    }
+    void riempi_interi(int n) {
+      lista aux = interi ;
+      while(aux!=NULL) {
+          aux = aux->next ;
+      }
+      lista nuovo ;
+      for(int i=0; i<n; i++){
+        nuovo = new nodo ;
+        nuovo->val = rand()%10 ;
+        nuovo->next = interi ;
+        interi = nuovo ;            
+      }
+    }
+    void stampa_interi() {
+      lista aux = interi ;
+      while(aux!=NULL) {
+        cout<< aux->val<< " " ;
+        aux = aux->next ;
+      }
+      cout<< endl ;
+    }
+};
+
+class mlistasomma : public mlista {
+  public :
+    mlistasomma(int n) : mlista(n) {}
+    int somma() {
+      lista aux = interi ;
+      int sum = aux->val ;
+      lista dup = new nodo ;
+      dup->val = aux->val ;
+      dup->next = NULL ;
+      lista tmp = dup ;
+      bool trovato ;
+      while(aux!=NULL) {
+        trovato = false ;
+        while(tmp!=NULL) {
+          if(aux->val == tmp->val) trovato = true ;
+          tmp = tmp->next ;
+        }
+        if(!trovato) {
+          sum += aux->val ;
+          lista p = new nodo ;
+          p->val = aux->val ;
+          p->next = dup ;
+          dup = p ;
+        }
+        aux = aux->next ;
+        tmp = dup ;
+      }
+      return sum ;
+    }
+} ;
+
+void strampa(lista fare){
+  lista aux = fare ;
+	while (aux != NULL){
+		cout << aux->val << " " ;
+		aux = aux->next ;
+	}
+	cout << endl ;
+}
+
+lista create_list(int n){
+ srand(time(0)) ;
+ lista p = NULL ;
+ lista tmp ;
+ for (int i = 0; i < n ; i = i+1)  {
+  tmp = new nodo ;
+  tmp->val = rand() % (3*n+1) ;
+  tmp->next = p ;
+  p = tmp ;
+  }
+ return p ;
+}
+
+int main () {
+  srand(time(0)) ;
+  //creo due mlista e le stampo
+  mlista pizza = mlista(5) ;
+  pizza.stampa_interi() ;
+  mlista lasagne = mlista(4) ;
+  lasagne.stampa_interi() ;
+
+  pizza.unione1(lasagne) ;
+  pizza.stampa_interi() ;
+
+  pizza.riempi_interi(2) ;
+  pizza.stampa_interi() ;
+
+  //lista gelato = create_list(4) ;
+  //strampa(gelato) ;
+  //pizza.unione(gelato) ;
+  //pizza.stampa_interi() ;
+
+  int n ;
+  cin>> n ;
+  cout<< pizza.checkmu(n)<< endl;
+  cout<< "\n" ;
+
+  mlistasomma pera = mlistasomma(3) ;
+  pera.stampa_interi() ;
+  pera.riempi_interi(2) ;
+  pera.stampa_interi() ;
+  cout<< pera.somma() ;
+  return 0 ;
+}
+
+// 10 punti) Un impianto sciistico di risalita è caratterizzato da un nome e da un costo di utilizzo (espresso in punti) Definire mediante array il tipo di dato "comprensorio_sciistico") che è un insieme finito di impianti di risalita.
+
+//In seguito, definire la classe skipass con i campi opportuni in modo da ammettere due tipi di skipass:
+
+//a) Quello "Giornaliero" che puo' essere utilizzato nell'arco di una sola e non ha limite sul numero di ingressi.
+
+//b) quello "Ricaricabile" che allacquisto ha un determinato numero di punti, che verranno scalati ad ogni accesso agli impianti e che dipende dal singolo impianto. 
+
+//La clsse skipass ha i segenti metodi:
+
+//a) Un metodo "accesso" cheprende in input il nome di un impianto e una data e consente di accedere allimpianto (decrementando i punti o controllando che lo skipass è valido); (una data è un intero di 8 cifre, le prime sono sono l'anno le altre 2 sono i mesi e le ultime due indicano il giorno)
+
+//b) Un metodo "ricarica" che prende in input un intero (che india i punti oppure un giorno) e un booleano ("vero" signifia che si vuole ricariare con un altro giorno, "falso" significa che si vogliono ricariare punti)
+
+/* DOMANDE :
+-struct giornaliero e ricaricabile
+-costruttore
+
+*/
+
+#define N 10
+class skipass1 {
+  protected:
+	  struct giornaliero {
+		  bool questo=false ;
+		  int data ;
+	  } ;
+	  struct ricaricabile {
+		  bool questo=false ;
+		  int punti = 10;
+	  } ;
+    struct impianto_sciistico {
+      char nome[20] ;
+      int costo ;
+    } ;
+	  giornaliero skipass_g ;
+	  ricaricabile skipass_r ;
+	  impianto_sciistico comprensorio_sciistico[N] ;
+	  int count = 0 ;
+
+  public:
+	  skipass1(bool ricaricabile, int data=0) {
+		  if(ricaricabile) skipass_r.questo = true ;
+      //La data puo' si potrebbe farla iniziare da 20201312
+      //Cosi' da non prendere una data antecedente al presente.
+		  else if(data>=10000000 && data<100000000) {
+			  skipass_g.questo = true ;
+			  skipass_g.data = data ;
+		  }
+		  else cout<<"Dati inseriti non validi" ;
+		}
+	  void aggiungi_impianto(char nome[], int costo) {
+		  bool presente = false ;
+		  if(count<N){
+			  for(int i=0; i<=count && !presente; i++) {
+				  int idem = strcmp(comprensorio_sciistico[count].nome, nome) ;
+				  if(idem==0) {
+					  cout<< "Impianto gia' presente nel comprensorio" ;
+					  presente = true ;
+				  }
+			  }
+			  if(!presente) {
+				  count++ ;
+				  strcpy(comprensorio_sciistico[count].nome, nome) ;
+				  comprensorio_sciistico[count].costo = costo ;
+			  }
+		  }
+		  else cout<< "Il comprensorio e' gia' al completo" ;
+	  }
+	  void accesso(char impianto[], int data){
+			bool presente = false ;
+			for(int i=0; i<N; i++) {
+				int idem = strcmp(comprensorio_sciistico[i].nome, impianto) ;
+				if(idem==0) {
+					presente = true ;
+					if(skipass_g.questo == true) {
+						if(data==skipass_g.data) cout<<"Accesso consentito" ;
+						else cout<< "Questo skipass non è valido oggi" ;
+					}
+					//else if(skipass_r.questo == true) {
+					else {
+						if(skipass_r.punti>=comprensorio_sciistico[i].costo) {
+              skipass_r.punti-=comprensorio_sciistico[i].costo ;
+              // cout << "Accesso consentito";
+            }
+						else cout<< "Punti insufficienti per accedere a questo impianto" ;
+					}
+				}
+			}
+			if(!presente) cout<< "L'impianto a cui cerchi di accedere non fa parte del comprensorio" ;
+		}
+		void ricarica(int dato, bool nuova_data) {
+			if(nuova_data) {
+				if(dato>=10000000 && dato<100000000) skipass_g.data = dato ;
+				else cout<< "Dati inseriti non validi" ;
+			}
+			else skipass_r.punti += dato ;
+		}
+};
