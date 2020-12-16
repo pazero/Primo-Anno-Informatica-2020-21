@@ -1,3 +1,20 @@
+#include<iostream>
+#include<cstdlib>
+#include<ctime>
+#include<cstring>
+#include<cmath>
+
+using namespace std ;
+
+/* Punti 10) Definire la classe mlista con un campo che è una lista di interi non ordinata e con possibili duplicazioni (Un intero puo' occorrere piu volte). La lista è una lista "semplice", cioè gli elementi hanno soltato il puntatore in avanti. 
+La classe contiene anche due metodi:
+
+Checkmu1 che prende in input un intero e ritorna true se l'intero occorre 2 o piu' volte, false altrimenti.
+
+union che prende in input un oggetto di classe mlista, sia esso x, e aggiorna la lista del this inserendo anche gli elementi della lista di x. 
+
+definire la seguente sotto-classe mlistasomma di mlista che ha un metodo somma che ritorna la somma degli interi distinti che si trovano nel this, cioè gli interi che sono presenti piu' volte vengono sommati una sola volta. La funzione somma non puo' altreare il this. */
+
 struct nodo {
   int val ;
   nodo *next;
@@ -17,6 +34,22 @@ class mlista {
         interi = nuovo ;            
       }
     }
+    bool checkmu(int n) {
+      int count=0 ;
+      lista aux=interi ;
+      while(aux!=NULL) {
+        if(aux->val == n) count++ ;
+        if(count == 2) return true ;
+        aux = aux->next ;
+       }
+      return false ;
+    }
+    void unione(lista x) {
+      lista aux = interi ;
+      lista aux2 = x ;
+      while(aux->next!=NULL) aux = aux->next ;
+      aux->next = aux2 ;
+    }
     lista svela_this() {
       return interi ;
     }
@@ -26,4 +59,110 @@ class mlista {
       while(aux->next!=NULL) aux = aux->next ;
       aux->next = aux2 ;
     }
- } ;
+    void riempi_interi(int n) {
+      lista aux = interi ;
+      while(aux!=NULL) {
+          aux = aux->next ;
+      }
+      lista nuovo ;
+      for(int i=0; i<n; i++){
+        nuovo = new nodo ;
+        nuovo->val = rand()%10 ;
+        nuovo->next = interi ;
+        interi = nuovo ;            
+      }
+    }
+    void stampa_interi() {
+      lista aux = interi ;
+      while(aux!=NULL) {
+        cout<< aux->val<< " " ;
+        aux = aux->next ;
+      }
+      cout<< endl ;
+    }
+};
+
+class mlistasomma : public mlista {
+  public :
+    mlistasomma(int n) : mlista(n) {}
+    int somma() {
+      lista aux = interi ;
+      int sum = aux->val ;
+      lista dup = new nodo ;
+      dup->val = aux->val ;
+      dup->next = NULL ;
+      lista tmp = dup ;
+      bool trovato ;
+      while(aux!=NULL) {
+        trovato = false ;
+        while(tmp!=NULL) {
+          if(aux->val == tmp->val) trovato = true ;
+          tmp = tmp->next ;
+        }
+        if(!trovato) {
+          sum += aux->val ;
+          lista p = new nodo ;
+          p->val = aux->val ;
+          p->next = dup ;
+          dup = p ;
+        }
+        aux = aux->next ;
+        tmp = dup ;
+      }
+      return sum ;
+    }
+} ;
+
+void strampa(lista fare){
+  lista aux = fare ;
+	while (aux != NULL){
+		cout << aux->val << " " ;
+		aux = aux->next ;
+	}
+	cout << endl ;
+}
+
+lista create_list(int n){
+ srand(time(0)) ;
+ lista p = NULL ;
+ lista tmp ;
+ for (int i = 0; i < n ; i = i+1)  {
+  tmp = new nodo ;
+  tmp->val = rand() % (3*n+1) ;
+  tmp->next = p ;
+  p = tmp ;
+  }
+ return p ;
+}
+
+int main () {
+  srand(time(0)) ;
+  //creo due mlista e le stampo
+  mlista pizza = mlista(5) ;
+  pizza.stampa_interi() ;
+  mlista lasagne = mlista(4) ;
+  lasagne.stampa_interi() ;
+
+  pizza.unione1(lasagne) ;
+  pizza.stampa_interi() ;
+
+  pizza.riempi_interi(2) ;
+  pizza.stampa_interi() ;
+
+  //lista gelato = create_list(4) ;
+  //strampa(gelato) ;
+  //pizza.unione(gelato) ;
+  //pizza.stampa_interi() ;
+
+  int n ;
+  cin>> n ;
+  cout<< pizza.checkmu(n)<< endl;
+  cout<< "\n" ;
+
+  mlistasomma pera = mlistasomma(3) ;
+  pera.stampa_interi() ;
+  pera.riempi_interi(2) ;
+  pera.stampa_interi() ;
+  cout<< pera.somma() ;
+  return 0 ;
+}
